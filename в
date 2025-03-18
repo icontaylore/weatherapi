@@ -1,0 +1,4 @@
+SELECT title
+FROM
+    author LEFT JOIN book
+    ON author.author_id = book.author_id
