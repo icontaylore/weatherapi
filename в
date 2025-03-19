@@ -1,4 +1,7 @@
-SELECT title
+SELECT cu.id,cu.email
 FROM
-    author LEFT JOIN book
-    ON author.author_id = book.author_id
+    public.carts ca
+    INNER JOIN public.customer cu ON ca.customer_id = cu.id
+GROUP BY id,email
+ORDER BY SUM(ca.amount) DESC
+LIMIT 10
