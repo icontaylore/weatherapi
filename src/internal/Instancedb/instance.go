@@ -15,7 +15,6 @@ type Instance struct {
 
 func New(c *pgxpool.Pool) (*Instance, error) {
 	maken := &Instance{DB: c}
-	wg := sy
 	if maken != nil {
 		return maken, nil
 	}

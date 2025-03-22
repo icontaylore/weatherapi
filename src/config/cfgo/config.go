@@ -3,6 +3,7 @@ package cfgo
 import (
 	"bot_notif/src/models"
 	"context"
+	"database/sql"
 	"fmt"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/joho/godotenv"
@@ -26,6 +27,21 @@ func Cfg() (*models.Config, error) {
 		log.Fatal("nil config")
 	}
 	return newCfg, nil
+}
+
+func ParseCfgDefaultSql(config *models.Config) *sql.DB {
+	connStr := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
+		url.QueryEscape(config.DBuser),
+		config.Password,
+		config.Host,
+		config.Port,
+		config.DBname,
+	)
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		log.Println("ошибка с подкл к базе")
+	}
+	return db
 }
 
 func ParseCfg(config *models.Config) (*pgxpool.Config, error) {
